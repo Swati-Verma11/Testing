@@ -19,8 +19,8 @@ jobs:
       run: |
           pip install python-semantic-release
           pip install wheel
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name Swati-Verma11
+          git config user.email swativerma85639@gmail.com
           python setup.py sdist
           semantic-release publish
           
