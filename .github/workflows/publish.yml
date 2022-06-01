@@ -15,6 +15,11 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name : create dist
+    run: |
+        pip install wheel
+        python setup.py sdist
+
     - name: Python Semantic Release
       run: |
           pip install python-semantic-release
