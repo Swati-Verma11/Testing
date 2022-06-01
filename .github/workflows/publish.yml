@@ -1,0 +1,33 @@
+name: Semantic Release
+
+on:
+  push:
+    branches:
+      - test-ci
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    concurrency: release
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Python Semantic Release
+      run: |
+          pip install python-semantic-release
+          pip install wheel
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          python setup.py sdist
+          semantic-release publish
+          
+    # Step 5. Publish to TestPyPI
+    - uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: ${{ secrets.TEST_PYPI_USER_TOKEN }}
+        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
+        skip_existing: true
